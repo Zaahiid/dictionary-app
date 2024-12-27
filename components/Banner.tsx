@@ -4,9 +4,17 @@ import { useState } from "react";
 
 export default function Banner({ changeWord }: { changeWord: any }) {
   const [value, setValue] = useState("");
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      changeWord(value);
+    }
+  };
+
   return (
     <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%  h-[40vh]">
-      <form className="max-w-md mx-auto">
+      <form className="max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
         <label
           htmlFor="default-search"
           className="mb-2  text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -39,6 +47,8 @@ export default function Banner({ changeWord }: { changeWord: any }) {
             onChange={(e) => {
               setValue(e.target.value);
             }}
+            onKeyDown={handleKeyPress}
+            value={value}
             required
           />
           <button
